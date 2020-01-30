@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import CalendarList from '../../../components/CalendarList';
 
-function Header() {
-    const [selectedDate, setSelectedDate] = useState();
-
+function Header(props) {
+    const { selectedDate, setSelectedDate } = props;
     const calendarLabel = moment().format('MMMM YYYY');
 
     const getDays = () => {
