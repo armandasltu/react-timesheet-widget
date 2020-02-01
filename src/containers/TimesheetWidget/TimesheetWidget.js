@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import { useStore } from '../../store';
 import { Button } from '@material-ui/core';
-
 import './style.scss';
+import { fetchEvents } from '../../actions';
+import Loader from '../../components/Loader/Loader';
 import Header from './Header';
+import Content from './Content';
 
 function TimesheetWidget() {
-    const [selectedDate, setSelectedDate] = useState();
-    const selectedDateLabel = moment(selectedDate).format('dddd DD.MM.YYYY')
+    const [{ events }, dispatch] = useStore();
+
+    React.useEffect(() => {
+        !events.isLoaded && fetchEvents(dispatch);
+    });
+
+    const [ selectedDate, setSelectedDate ] = useState();
 
     const buttonStyle = {
-        "background-color": "#F08900",
+        "backgroundColor": "#F08900",
         "width": "100%",
         "color": "#FFFFFF",
-        "font-weight": "bold"
-      };
+        "fontWeight": "bold"
+    };
 
     return (
         <div className="timesheet-widget">
             <Header selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-            <div className="timesheet-widget--content">
-                {selectedDateLabel}
-            </div>
+            {
+                !events.isLoaded ? (<Loader />) : (<Content selectedDate={selectedDate} events={events} />)
+            }
             <div className="timesheet-widget--footer">
                 <Button size="large" onClick={() => alert('test')} style={buttonStyle}>Add task</Button>
             </div>
