@@ -1,10 +1,12 @@
 import React from 'react';
+import { useStore } from '../../../store';
 import moment from 'moment';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { setSelectedDate } from '../../../actions';
 import CalendarList from '../../../components/CalendarList';
 
-function Header(props) {
-    const { selectedDate, setSelectedDate } = props;
+function Header() {
+    const [{ selectedDate }, dispatch] = useStore();
     const calendarLabel = moment().format('MMMM YYYY');
 
     const getDays = () => {
@@ -15,7 +17,7 @@ function Header(props) {
                 date: dateStart.toDate(),
                 hours: '-',
                 onClick: (item) => {
-                    setSelectedDate(item);
+                    setSelectedDate(dispatch, item);
                 }
             });
             dateStart.add(1, 'days');

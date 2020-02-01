@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 const events = [
     {
-        date: moment().subtract(2, 'days').unix(),
+        date: moment().subtract(2, 'days').toDate(),
         quantity: 3,
         price: 2.45,
         eventType: 'Expense type 1',
@@ -19,7 +19,7 @@ const events = [
         lastTaskEnd: null
     },
     {
-        date: moment().subtract(2, 'days').unix(),
+        date: moment().subtract(2, 'days').toDate(),
         quantity: 1,
         price: 1.23,
         eventType: 'Expense type 2',
@@ -34,7 +34,7 @@ const events = [
         lastTaskEnd: null
     },
     {
-        date: moment().subtract(4, 'days').unix(),
+        date: moment().subtract(4, 'days').toDate(),
         quantity: null,
         price: null,
         eventType: 'Hours type 1',
@@ -45,11 +45,11 @@ const events = [
         isApproved: true,
         isRejected: false,
         tasksCount: null,
-        firstTaskStart: moment().subtract(4, 'days').subtract(2, 'hours').subtract(22, 'minutes').unix(),
-        lastTaskEnd: moment().subtract(4, 'days').unix()
+        firstTaskStart: moment().subtract(4, 'days').subtract(2, 'hours').subtract(22, 'minutes').toDate(),
+        lastTaskEnd: moment().subtract(4, 'days').toDate()
     },
     {
-        date: moment().subtract(1, 'days').unix(),
+        date: moment().subtract(1, 'days').toDate(),
         quantity: null,
         price: null,
         eventType: 'Hours type 2',
@@ -60,11 +60,11 @@ const events = [
         isApproved: true,
         isRejected: false,
         tasksCount: null,
-        firstTaskStart: moment().subtract(1, 'days').subtract(6, 'hours').unix(),
-        lastTaskEnd: moment().subtract(1, 'days').unix()
+        firstTaskStart: moment().subtract(1, 'days').subtract(6, 'hours').toDate(),
+        lastTaskEnd: moment().subtract(1, 'days').toDate()
     },
     {
-        date: moment().unix(),
+        date: moment().toDate(),
         quantity: null,
         price: null,
         eventType: 'Additional hours type 1',
@@ -75,8 +75,8 @@ const events = [
         isApproved: true,
         isRejected: false,
         tasksCount: 2,
-        firstTaskStart: moment().subtract(3, 'hours').unix(),
-        lastTaskEnd: moment().unix()
+        firstTaskStart: moment().toDate(),
+        lastTaskEnd: moment().add(1, 'minutes').toDate()
     }
 ];
 

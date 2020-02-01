@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
+
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
@@ -8,7 +9,6 @@ import AvTimerIcon from '@material-ui/icons/AvTimer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
@@ -42,6 +42,10 @@ function ListItem(props) {
 function Expenses(props) {
     const { title, data } = props;
 
+    if (!data.length) {
+        return null;
+    }
+
     const table = <Table size="small" aria-label={title}>
         <TableHead>
             <TableRow>
@@ -69,6 +73,10 @@ function Expenses(props) {
 function Hours(props) {
     const { title, data, icon } = props;
 
+    if (!data.length) {
+        return null;
+    }
+
     const table = <Table size="small" aria-label={title}>
         <TableHead>
             <TableRow>
@@ -78,8 +86,11 @@ function Hours(props) {
         </TableHead>
         <TableBody>
             {data.map(({ eventType, firstTaskStart, lastTaskEnd }, key) => {
-                const hours = moment.unix(lastTaskEnd - firstTaskStart).format('H:mm');
-
+                const startDate = moment(firstTaskStart);
+                const endDate =  moment(lastTaskEnd);
+                const duration = moment.duration(endDate.diff(startDate)).asMilliseconds();
+                const hours = moment.utc(duration).format('H:mm');
+                
                 return <TableRow key={key}>
                     <TableCell component="th" scope="row">
                         {eventType}
@@ -99,18 +110,25 @@ function Content(props) {
 
     const selectedDateLabel = moment(selectedDate).format('dddd DD.MM.YYYY');
     const ScrollableContainer = styled.div`
-                margin-top: 1rem;
-                height: 200px;
-                overflow: auto;
-            `;
+        margin-top: 1rem;
+        height: 200px;
+        overflow: auto;
+    `;
+    const NoData = styled.div`
+        margin-top: 2rem;
+        text-align: center;
+        height: 200px;
+    `;
 
     return <div className="timesheet-widget--content">
         {selectedDateLabel}
-        <ScrollableContainer>
-            <Hours title={'Hours'} data={hours} icon={<AccessTimeIcon />} />
-            <Expenses title={'Expenses'} data={expenses} />
-            <Hours title={'Additional hours'} data={additionalHours} icon={<AvTimerIcon />} />
-        </ScrollableContainer>
+        {hours.length || expenses.length || additionalHours.length ?
+            <ScrollableContainer>
+                <Hours title={'Hours'} data={hours} icon={<AccessTimeIcon />} />
+                <Expenses title={'Expenses'} data={expenses} />
+                <Hours title={'Additional hours'} data={additionalHours} icon={<AvTimerIcon />} />
+            </ScrollableContainer> : <NoData>No events for today.</NoData>
+        }
     </div>;
 }
 

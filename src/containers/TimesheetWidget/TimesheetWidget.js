@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useStore } from '../../store';
 import { Button } from '@material-ui/core';
 import './style.scss';
@@ -8,13 +8,12 @@ import Header from './Header';
 import Content from './Content';
 
 function TimesheetWidget() {
-    const [{ events }, dispatch] = useStore();
+    const [{ events, selectedDate }, dispatch] = useStore();
 
     React.useEffect(() => {
-        !events.isLoaded && fetchEvents(dispatch);
-    });
+        fetchEvents(dispatch);
+    }, [selectedDate]);
 
-    const [ selectedDate, setSelectedDate ] = useState();
 
     const buttonStyle = {
         "backgroundColor": "#F08900",
@@ -25,7 +24,7 @@ function TimesheetWidget() {
 
     return (
         <div className="timesheet-widget">
-            <Header selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            <Header />
             {
                 !events.isLoaded ? (<Loader />) : (<Content selectedDate={selectedDate} events={events} />)
             }

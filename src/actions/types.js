@@ -1,1 +1,2 @@
-export const FETCH_EVENTS = 'FETCH_EVENTS'
+export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const SET_SELECTED_DATE = 'SET_SELECTED_DATE';
