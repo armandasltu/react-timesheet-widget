@@ -13,7 +13,7 @@ function TimesheetWidget() {
   React.useEffect(() => {
     !events.length && fetchEvents(dispatch);
     groupEventsByDate(dispatch);
-  }, [events, selectedDate]);
+  }, [events, selectedDate, dispatch]);
 
   const buttonStyle = {
     backgroundColor: '#F08900',
