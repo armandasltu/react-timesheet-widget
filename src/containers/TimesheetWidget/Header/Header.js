@@ -10,7 +10,6 @@ function Header() {
   const [{ events, selectedDate }, dispatch] = useStore();
   const calendarLabel = moment().format('MMMM YYYY');
 
-  // @TODO: needs performance improvements and move to actions
   const getWorkedHours = date => {
     if (events.length) {
       const currentDay = date.format('YYYYDD');
