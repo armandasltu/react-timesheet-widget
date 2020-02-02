@@ -16,7 +16,7 @@ function Content(props) {
 
   const ScrollableContainer = styled.div`
     margin-top: 1rem;
-    height: 200px;
+    height: 250px;
     overflow: auto;
   `;
   const NoData = styled.div`
