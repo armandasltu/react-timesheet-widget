@@ -32,6 +32,7 @@ function Hours(props) {
       if (key === data.length - 1) {
         lastTask = endDate.format('HH:mm');
       }
+
       return (
         <TableRow key={key}>
           <TableCell component="th" scope="row">

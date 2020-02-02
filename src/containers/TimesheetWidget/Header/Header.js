@@ -23,8 +23,9 @@ function Header() {
         const duration = moment.duration(endDate.diff(startDate)).asMilliseconds();
         durationSum += duration;
       });
-
-      return moment.utc(durationSum).format('H:mm');
+      if (durationSum) {
+        return moment.utc(durationSum).format('H:mm');
+      }
     }
 
     return '-';
