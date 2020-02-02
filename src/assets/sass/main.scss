@@ -6,11 +6,3 @@
 // Utilities and settings
 @import 'vars';
 @import 'utils';
-
-// Base
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background: $color-gray-light;
-}
