@@ -2,17 +2,18 @@ import React from 'react';
 import { useStore } from '../../store';
 import { Button } from '@material-ui/core';
 import './style.scss';
-import { fetchEvents } from '../../actions';
+import { fetchEvents, groupEventsByDate } from '../../actions';
 import Loader from '../../components/Loader/Loader';
 import Header from './Header';
 import Content from './Content';
 
 function TimesheetWidget() {
-    const [{ events, selectedDate }, dispatch] = useStore();
+    const [{ events, groupedEvents, selectedDate }, dispatch] = useStore();
 
     React.useEffect(() => {
-        fetchEvents(dispatch);
-    }, [selectedDate]);
+        !events.length && fetchEvents(dispatch);
+        groupEventsByDate(dispatch);
+    }, [events, selectedDate]);
 
 
     const buttonStyle = {
@@ -26,10 +27,10 @@ function TimesheetWidget() {
         <div className="timesheet-widget">
             <Header />
             {
-                !events.isLoaded ? (<Loader />) : (<Content selectedDate={selectedDate} events={events} />)
+                !groupedEvents.isLoaded ? (<Loader />) : (<Content selectedDate={selectedDate} events={groupedEvents} />)
             }
             <div className="timesheet-widget--footer">
-                <Button size="large" onClick={() => alert('test')} style={buttonStyle}>Add task</Button>
+                <Button size="large" onClick={() => alert('Add task')} style={buttonStyle}>Add task</Button>
             </div>
         </div>
     );

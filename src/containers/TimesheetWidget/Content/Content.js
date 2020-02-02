@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 function ListItem(props) {
-    const { icon, title, content } = props;
+    const { icon, title, children } = props;
 
     const Heading = styled.div`
         display: flex;
@@ -34,7 +34,7 @@ function ListItem(props) {
             {icon}<span>{title}</span>
         </Heading>
         <Content>
-            {content}
+            {children}
         </Content>
     </div>;
 }
@@ -46,28 +46,28 @@ function Expenses(props) {
         return null;
     }
 
-    const table = <Table size="small" aria-label={title}>
-        <TableHead>
-            <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Total</TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {data.map(({ eventType, quantity, price }, key) => (
-                <TableRow key={key}>
-                    <TableCell component="th" scope="row">
-                        {eventType}
-                    </TableCell>
-                    <TableCell align="right">{quantity}</TableCell>
-                    <TableCell align="right">{(quantity * price).toFixed(2)}</TableCell>
+    return <ListItem icon={<AttachMoneyIcon />} title={title}>
+        <Table size="small" aria-label={title}>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Type</TableCell>
+                    <TableCell align="right">Quantity</TableCell>
+                    <TableCell align="right">Total</TableCell>
                 </TableRow>
-            ))}
-        </TableBody>
-    </Table>;
-
-    return <ListItem icon={<AttachMoneyIcon />} title={title} content={table} />;
+            </TableHead>
+            <TableBody>
+                {data.map(({ eventType, quantity, price }, key) => (
+                    <TableRow key={key}>
+                        <TableCell component="th" scope="row">
+                            {eventType}
+                        </TableCell>
+                        <TableCell align="right">{quantity}</TableCell>
+                        <TableCell align="right">{(quantity * price).toFixed(2)}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </ListItem>;
 }
 
 function Hours(props) {
@@ -77,32 +77,32 @@ function Hours(props) {
         return null;
     }
 
-    const table = <Table size="small" aria-label={title}>
-        <TableHead>
-            <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell align="right">Duration</TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {data.map(({ eventType, firstTaskStart, lastTaskEnd }, key) => {
-                const startDate = moment(firstTaskStart);
-                const endDate =  moment(lastTaskEnd);
-                const duration = moment.duration(endDate.diff(startDate)).asMilliseconds();
-                const hours = moment.utc(duration).format('H:mm');
-                
-                return <TableRow key={key}>
-                    <TableCell component="th" scope="row">
-                        {eventType}
-                    </TableCell>
-                    <TableCell align="right">{hours}</TableCell>
-                </TableRow>;
-            }
-            )}
-        </TableBody>
-    </Table>;
+    return <ListItem icon={icon} title={title}>
+        <Table size="small" aria-label={title}>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Type</TableCell>
+                    <TableCell align="right">Duration</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data.map(({ eventType, firstTaskStart, lastTaskEnd }, key) => {
+                    const startDate = moment(firstTaskStart);
+                    const endDate = moment(lastTaskEnd);
+                    const duration = moment.duration(endDate.diff(startDate)).asMilliseconds();
+                    const hours = moment.utc(duration).format('H:mm');
 
-    return <ListItem icon={icon} title={title} content={table} />;
+                    return <TableRow key={key}>
+                        <TableCell component="th" scope="row">
+                            {eventType}
+                        </TableCell>
+                        <TableCell align="right">{hours}</TableCell>
+                    </TableRow>;
+                }
+                )}
+            </TableBody>
+        </Table>
+    </ListItem >;
 }
 
 function Content(props) {

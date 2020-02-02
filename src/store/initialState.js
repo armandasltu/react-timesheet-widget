@@ -2,7 +2,8 @@ import moment from 'moment';
 
 export default {
     selectedDate: moment(),
-    events: {
+    events: [],
+    groupedEvents: {
         isLoaded: false,
         hours: [],
         expenses: [],

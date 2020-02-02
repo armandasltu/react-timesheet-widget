@@ -10,6 +10,7 @@ const createReducer = handlers => (state, action) => {
 };
 
 export default createReducer({
-  [types.FETCH_EVENTS]: events.addEventsByDate,
-  [types.SET_SELECTED_DATE]: events.setSelectedDate
+  [types.FETCH_EVENTS]: events.addEvents,
+  [types.SET_SELECTED_DATE]: events.setSelectedDate,
+  [types.GROUP_EVENTS_BY_DATE]: events.groupEventsByDate
 });

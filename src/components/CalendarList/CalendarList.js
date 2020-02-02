@@ -32,6 +32,7 @@ const Day = styled.div`
     background-color: ${props => props.active ? `#F08900` : 'transparent'};
     border: 1px solid ${props => props.current ? `#F08900` : 'transparent'};
     border-radius: 4px;
+    min-width: 20px;
 `;
 
 const Hours = styled.div`
@@ -55,7 +56,9 @@ const CalendarList = (props) => {
 
             return <Item key={key} onClick={() => onClick(date)}>
                 <DayTitle>{moment(date).format('ddd')}</DayTitle>
-                <Day active={isActive} current={isCurrentDay}>{moment(date).format('D')}</Day>
+                <Day active={isActive} current={isCurrentDay}>
+                    {moment(date).format('D')}
+                </Day>
                 <Hours>{hours}</Hours>
             </Item>;
         })}

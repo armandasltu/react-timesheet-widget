@@ -14,7 +14,9 @@ export const fetchEvents = async (dispatch) => {
 
         const { events } = response.data;
 
-        return dispatch({ type: types.FETCH_EVENTS, payload: { events } })
+        return dispatch(
+            { type: types.FETCH_EVENTS, payload: { events } }
+        );
     } catch (error) {
         console.log(error);
     }
@@ -22,4 +24,8 @@ export const fetchEvents = async (dispatch) => {
 
 export const setSelectedDate = (dispatch, selectedDate) => dispatch(
     { type: types.SET_SELECTED_DATE, payload: { selectedDate } }
+);
+
+export const groupEventsByDate = (dispatch) => dispatch(
+    { type: types.GROUP_EVENTS_BY_DATE }
 );
