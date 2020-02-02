@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
+import { Button } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
 import Expenses from './Expenses';
@@ -23,14 +24,30 @@ function Content(props) {
     text-align: center;
     height: 200px;
   `;
+  const Heading = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  `;
+  const buttonStyle = {
+    color: '#F08900',
+    fontWeight: 'bold'
+  };
+
   const selectedDateLabel = moment(selectedDate).format('dddd DD.MM.YYYY');
 
   return (
     <div className="timesheet-widget--content">
-      {selectedDateLabel}
+      <Heading>
+        <span>{selectedDateLabel}</span>
+        <Button size="large" onClick={() => alert('GO TO TIMESHEET')} style={buttonStyle}>
+          GO TO TIMESHEET
+        </Button>
+      </Heading>
       {hours.length || expenses.length || additionalHours.length ? (
         <ScrollableContainer>
-          <Hours title="Hours" data={hours} icon={<AccessTimeIcon />} />
+          <Hours title="Hours" data={hours} icon={<AccessTimeIcon />} isHoursType />
           <Expenses title="Expenses" data={expenses} />
           <Hours title="Additional hours" data={additionalHours} icon={<AvTimerIcon />} />
         </ScrollableContainer>
