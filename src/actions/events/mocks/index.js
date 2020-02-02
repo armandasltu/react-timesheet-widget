@@ -4,10 +4,10 @@ import MockAdapter from 'axios-mock-adapter';
 
 const getRandomNumber = (from, to) => Math.floor(Math.random() * to) + from;
 
-const generateEvents = (quantity = 50) => {
+const generateEvents = (count = 50) => {
   const result = [];
   const availableTypes = ['hours', 'expense', 'additionalHours'];
-  for (let i = 0; i < quantity; i++) {
+  for (let i = 0; i < count; i++) {
     const type = availableTypes[getRandomNumber(0, 3)];
     const day = getRandomNumber(0, 7);
     const date = moment().subtract(getRandomNumber(0, 7), 'days');
