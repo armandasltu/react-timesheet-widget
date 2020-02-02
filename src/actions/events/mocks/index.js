@@ -2,107 +2,49 @@ import moment from 'moment';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-const events = [
-  {
-    date: moment()
-      .subtract(2, 'days')
-      .toDate(),
-    quantity: 3,
-    price: 2.45,
-    eventType: 'Expense type 1',
-    isExpenseType: true,
-    isHoursEventType: false,
-    isAdditionalHoursEventType: false,
-    isWorkHour: true,
-    isApproved: true,
-    isRejected: false,
-    tasksCount: null,
-    firstTaskStart: null,
-    lastTaskEnd: null
-  },
-  {
-    date: moment()
-      .subtract(2, 'days')
-      .toDate(),
-    quantity: 1,
-    price: 1.23,
-    eventType: 'Expense type 2',
-    isExpenseType: true,
-    isHoursEventType: false,
-    isAdditionalHoursEventType: false,
-    isWorkHour: true,
-    isApproved: true,
-    isRejected: false,
-    tasksCount: null,
-    firstTaskStart: null,
-    lastTaskEnd: null
-  },
-  {
-    date: moment()
-      .subtract(4, 'days')
-      .toDate(),
-    quantity: null,
-    price: null,
-    eventType: 'Hours type 1',
-    isExpenseType: false,
-    isHoursEventType: true,
-    isAdditionalHoursEventType: false,
-    isWorkHour: true,
-    isApproved: true,
-    isRejected: false,
-    tasksCount: null,
-    firstTaskStart: moment()
-      .subtract(4, 'days')
-      .subtract(2, 'hours')
-      .subtract(22, 'minutes')
-      .toDate(),
-    lastTaskEnd: moment()
-      .subtract(4, 'days')
-      .toDate()
-  },
-  {
-    date: moment()
-      .subtract(1, 'days')
-      .toDate(),
-    quantity: null,
-    price: null,
-    eventType: 'Hours type 2',
-    isExpenseType: false,
-    isHoursEventType: true,
-    isAdditionalHoursEventType: false,
-    isWorkHour: true,
-    isApproved: true,
-    isRejected: false,
-    tasksCount: null,
-    firstTaskStart: moment()
-      .subtract(1, 'days')
-      .subtract(6, 'hours')
-      .toDate(),
-    lastTaskEnd: moment()
-      .subtract(1, 'days')
-      .toDate()
-  },
-  {
-    date: moment().toDate(),
-    quantity: null,
-    price: null,
-    eventType: 'Additional hours type 1',
-    isExpenseType: false,
-    isHoursEventType: false,
-    isAdditionalHoursEventType: true,
-    isWorkHour: true,
-    isApproved: true,
-    isRejected: false,
-    tasksCount: 2,
-    firstTaskStart: moment().toDate(),
-    lastTaskEnd: moment()
-      .add(1, 'minutes')
-      .toDate()
+const getRandomNumber = (from, to) => Math.floor(Math.random() * to) + from;
+
+const generateEvents = (amount = 50) => {
+  const result = [];
+  const availableTypes = ['hours', 'expense', 'additionalHours'];
+  for (let i = 0; i < amount; i++) {
+    const type = availableTypes[getRandomNumber(0, 3)];
+    const day = getRandomNumber(0, 7);
+    const date = moment().subtract(getRandomNumber(0, 7), 'days');
+    const firstTaskStart = moment()
+      .subtract(day, 'days')
+      .subtract(getRandomNumber(0, 7), 'hours')
+      .subtract(getRandomNumber(0, 60), 'minutes')
+      .toDate();
+    const lastTaskEnd = moment()
+      .subtract(day, 'days')
+      .toDate();
+    const quantity = getRandomNumber(1, 10);
+    const price = getRandomNumber(0, 10) + '.' + getRandomNumber(0, 99);
+    const eventType = type.toUpperCase() + ' ' + getRandomNumber(1, 20);
+
+    result.push({
+      date,
+      quantity,
+      price,
+      eventType,
+      isExpenseType: type === 'expense',
+      isHoursEventType: type === 'hours',
+      isAdditionalHoursEventType: type === 'additionalHours',
+      isWorkHour: true,
+      isApproved: true,
+      isRejected: false,
+      tasksCount: null,
+      firstTaskStart: type !== 'expense' ? firstTaskStart : null,
+      lastTaskEnd: type !== 'expense' ? lastTaskEnd : null
+    });
   }
-];
+
+  return result;
+};
 
 const mock = new MockAdapter(axios);
 
 mock.onGet('/events').reply(200, {
-  events
+  events: generateEvents()
 });
