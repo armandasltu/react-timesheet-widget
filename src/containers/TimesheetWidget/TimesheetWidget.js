@@ -28,7 +28,7 @@ function TimesheetWidget() {
         <Loader />
       ) : (
         <>
-          <Header hourEvents={groupedEvents.hours} />
+          <Header />
           <Content selectedDate={selectedDate} events={groupedEvents} />
         </>
       )}
