@@ -24,11 +24,13 @@ function TimesheetWidget() {
 
   return (
     <div className="timesheet-widget">
-      <Header />
       {!groupedEvents.isLoaded ? (
         <Loader />
       ) : (
-        <Content selectedDate={selectedDate} events={groupedEvents} />
+        <>
+          <Header hourEvents={groupedEvents.hours} />
+          <Content selectedDate={selectedDate} events={groupedEvents} />
+        </>
       )}
       <div className="timesheet-widget--footer">
         <Button size="large" onClick={() => alert('Add task')} style={buttonStyle}>
